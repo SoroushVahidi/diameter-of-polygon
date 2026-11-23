@@ -1,28 +1,20 @@
-# Diameter of a Convex Polygon (Parallel Algorithm)
+# Parallel Diameter of a Convex Polygon (C++ / OpenMP)
 
-An implementation of the **parallel algorithm for finding the diameter of a convex polygon** as described in **Goodrich’s algorithm book**, written in **C++** with **OpenMP**.
+**What this is.** The diameter of a convex polygon is the largest distance between any two of its vertices. This is a C++/OpenMP implementation of a parallel algorithm for it. The algorithm follows the presentation in Goodrich's algorithms textbook: points are converted to polar coordinates and split into "red" and "blue" chains, and candidate antipodal pairs are found with parallel prefix sums and merging. It was written as a parallel-algorithms exercise.
 
-## Reference
+## Files
 
-- The algorithm (rotating calipers or parallel search) is from the standard textbook by Goodrich et al. This repo provides a parallelized implementation suitable for teaching or benchmarking.
+- `diameter.cpp`: the whole program (polar conversion, red/blue partition, prefix sums, antipodal-pair search, and `main`). The maximum number of vertices is the compile-time constant `maxi = 100`.
 
-## What's in this repo
+## Build and run
 
-- C++ source code using OpenMP for parallelization.
-- Logic to compute the diameter (maximum distance between any two vertices) of a convex polygon.
-- Instructions or a simple driver to run on sample polygons.
+```bash
+g++ -O2 -fopenmp -o diameter diameter.cpp
+./diameter
+```
 
-## How to build and run
-
-1. Clone the repo and ensure you have a C++ compiler with OpenMP support (e.g. `g++ -fopenmp`).
-2. Compile (e.g. `make` or `g++ -fopenmp -o diameter diameter.cpp`).
-3. Run with an input polygon (format as in the repo—e.g. list of points).
-
-## Requirements
-
-- C++ compiler with OpenMP (e.g. GCC, Clang).
-- OpenMP runtime (usually included with the compiler).
+`main()` runs a hard-coded 5-vertex example polygon (`(0,0), (0,2), (1,3), (2,2), (2,0)`). To try another convex polygon, edit the `polyg[]` assignments and the vertex count passed to `diameter(n)`. There is no file or stdin input. Part of a sequential reference loop is left commented out in the source ("implementation omitted"), so treat this as a teaching implementation.
 
 ## License
 
-See the `LICENSE` file in the repository (if present). For academic use, please cite the Goodrich reference and this repository.
+MIT, see `LICENSE`.
